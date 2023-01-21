@@ -29,10 +29,13 @@ export const createUsers = async (
 };
 //middleware to get all users for get requests
 export const getAllUsers = async (req: Request, res: Response) => {
+  //res.setHeader("Content-Type", "text/html");
+
   try {
+    const { name } = await req.body;
+    console.log({ name });
     const user = await prisma.users.findMany();
-    res.render("login", { name: req.body.name });
-    res.json(user);
+    res.render("login", { name: name });
   } catch (error) {
     console.error(error);
   }
