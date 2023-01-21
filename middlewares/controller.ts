@@ -36,3 +36,26 @@ export const getAllUsers = async (req: Request, res: Response) => {
     console.error(error);
   }
 };
+
+//middlewares for authentications
+
+export const checkAuthenticated = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.isAuthenticated()) {
+    return res.redirect("/logout");
+  }
+  next();
+};
+export const checkNotAuthenticated = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/login");
+};

@@ -14,7 +14,7 @@ const passportStrategy = new passportGithub2.Strategy(
     done: (error: null, user: Express.User) => void
   ) {
     const user: Express.User = {
-      username: profile.name,
+      username: profile.username,
     };
     done(null, user);
   }
