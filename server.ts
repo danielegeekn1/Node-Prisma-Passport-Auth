@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 const router = express();
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
@@ -30,11 +30,10 @@ router.post("/register", async (req, res) => {
       password: password,
     },
   });
-  res.status(200).json(createUsers);
+  console.log({ createUsers });
+  res.json(createUsers);
 });
-router.get("/logout", (req, res) => {
-  res.render("logout");
-});
+
 router.listen(port, () => {
   console.log(`SERVER: running on port ${port}`);
 });
