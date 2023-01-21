@@ -31,7 +31,7 @@ export const createUsers = async (
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
     const user = await prisma.users.findMany();
-    res.render("login");
+    res.render("login", { name: req.body.name });
     res.json(user);
   } catch (error) {
     console.error(error);

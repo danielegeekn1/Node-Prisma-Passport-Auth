@@ -15,6 +15,6 @@ router.get("/register", (req, res) => {
 });
 router.post(
   "/register",
-  [check("username").not().isEmpty(), check("password").isLength({ min: 6 })],
+  [check("username").not().isEmpty(), check("password").isLength({ min: 4 })],
   createUsers
 );
