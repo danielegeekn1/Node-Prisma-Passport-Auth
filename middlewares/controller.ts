@@ -40,7 +40,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
 
 //middlewares for authentications
 
-export const checkAuthenticated = (
+export const checkHomeAuthenticated = (
   req: Request,
   res: Response,
   next: NextFunction
@@ -52,10 +52,10 @@ export const checkAuthenticated = (
   )
     next();
   {
-    return res.redirect("/logout");
+    return res.redirect("/");
   }
 };
-export const checkNotAuthenticated = (
+export const checkLoginAuthenticated = (
   req: Request,
   res: Response,
   next: NextFunction
