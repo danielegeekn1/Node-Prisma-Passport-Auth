@@ -2,6 +2,8 @@ import express, { NextFunction, Request, Response } from "express";
 const router = express();
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
+import { validationResult } from "express-validator";
+import { CustomError } from "./custom-error/custom-error";
 const prisma = new PrismaClient();
 const port = process.env.PORT;
 router.use(express.json());
@@ -23,20 +25,27 @@ router.get("/login", async (req, res) => {
 router.get("/register", (req, res) => {
   res.render("register");
 });
-router.post("/register", async (req: Request, res: Response) => {
-  const { name, email, password } = req.body;
-  let hashPsw = await bcrypt.hash(password, 10);
-  const createUsers = await prisma.users.create({
-    data: {
-      name: name,
-      email: email,
-      password: hashPsw,
-    },
-  });
-  console.log({ createUsers });
-  res.redirect("/login");
-});
-
+router.post(
+  "/register",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return next(new CustomError("add some valid inputs", 422));
+    }
+    const { name, email, password } = req.body;
+    let hashPsw = await bcrypt.hash(password, 10);
+    const createUsers = await prisma.users.create({
+      data: {
+        name: name,
+        email: email,
+        password: hashPsw,
+      },
+    });
+    console.log({ createUsers });
+    //req.flash("success_msg", " you successfully registered, you can login");
+    res.redirect("/login");
+  }
+);
 router.listen(port, () => {
   console.log(`SERVER: running on port ${port}`);
 });
