@@ -19,4 +19,6 @@ const passportStrategy = new passportGithub2.Strategy(
   }
 );
 passport.use(passportStrategy);
+passport.serializeUser<Express.User>((user, done) => done(null, user)); //store user data in the session
+passport.deserializeUser<Express.User>((user, done) => done(null, user)); //use our user stored data
 export { passport };
