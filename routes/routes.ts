@@ -18,3 +18,6 @@ router.post(
   createUsers
 );
 router.get("/login", getAllUsers);
+router.get("/logout", (req: Request, res: Response) => {
+  res.render("logout");
+});
