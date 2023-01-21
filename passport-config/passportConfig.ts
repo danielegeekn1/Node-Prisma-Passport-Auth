@@ -1,10 +1,11 @@
 import passport from "passport";
 import passportGithub2 from "passport-github2";
+import config from "../config";
 const passportStrategy = new passportGithub2.Strategy(
   {
-    clientID: "",
-    clientSecret: "",
-    callbackURL: "",
+    clientID: config.GITHUB_CLIENT_ID,
+    clientSecret: config.GITHUB_CLIENT_SECRET,
+    callbackURL: config.GITHUB_CALLBACK_URL,
   },
   function (
     accessToken: string,
@@ -13,7 +14,7 @@ const passportStrategy = new passportGithub2.Strategy(
     done: (error: null, user: Express.User) => void
   ) {
     const user: Express.User = {
-      username: profile.username,
+      username: profile.name,
     };
     done(null, user);
   }
