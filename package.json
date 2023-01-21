@@ -4,7 +4,7 @@
   "description": "authenticate with prisma and passport",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon server.ts"
+    "start": "nodemon server.ts"
   },
   "repository": {
     "type": "git",
