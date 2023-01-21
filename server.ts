@@ -3,6 +3,8 @@ const router = express();
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 const port = process.env.PORT;
+router.use(express.json());
+router.set("view", "ejs");
 router.get("/users", async (req, res) => {
   try {
     const user = await prisma.users.findMany();
