@@ -2,9 +2,11 @@ import express, { Request, Response } from "express";
 import { createUsers, getAllUsers } from "../middlewares/controller";
 export const router = express();
 import { check } from "express-validator";
+import authRoutes from "../routes/auth";
 router.use(express.json());
 router.set("view engine", "ejs");
 router.use(express.urlencoded({ extended: false })); //allows us to send data from frontend to our server
+router.use("/auth", authRoutes);
 router.get("/", (req: Request, res: Response) => {
   res.send("home");
 });
