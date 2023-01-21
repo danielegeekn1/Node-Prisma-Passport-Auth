@@ -4,6 +4,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 const port = process.env.PORT;
 router.use(express.json());
+router.use(express.urlencoded({ extended: false })); //allows us to send data from frontend to our server
 router.set("view engine", "ejs");
 
 router.get("/", (req, res) => {
@@ -31,7 +32,7 @@ router.post("/register", async (req, res) => {
     },
   });
   console.log({ createUsers });
-  res.json(createUsers);
+  res.redirect("/login");
 });
 
 router.listen(port, () => {
