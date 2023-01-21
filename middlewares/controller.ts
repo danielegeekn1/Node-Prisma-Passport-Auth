@@ -3,6 +3,7 @@ import { validationResult } from "express-validator";
 import bcrypt from "bcrypt";
 import { PrismaClient } from "@prisma/client";
 import { CustomError } from "../custom-error/custom-error";
+import passport from "passport";
 const prisma = new PrismaClient();
 //middleware to createUser for post requests
 export const createUsers = async (
@@ -44,18 +45,28 @@ export const checkAuthenticated = (
   res: Response,
   next: NextFunction
 ) => {
-  if (req.isAuthenticated()) {
+  if (
+    passport.authenticate("github", {
+      scope: ["user:email"],
+    })
+  )
+    next();
+  {
     return res.redirect("/logout");
   }
-  next();
 };
 export const checkNotAuthenticated = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  if (req.isAuthenticated()) {
-    return next();
+  if (
+    passport.authenticate("github", {
+      scope: ["user:email"],
+    })
+  )
+    next();
+  {
+    return res.redirect("/login");
   }
-  res.redirect("/login");
 };
