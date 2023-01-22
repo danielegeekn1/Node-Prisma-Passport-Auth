@@ -24,7 +24,9 @@ export const createUsers = async (
       password: hashPsw,
     },
   });
+
   console.log({ createUsers });
+
   //req.flash("success_msg", " you successfully registered, you can login");
   res.redirect("/login");
 };
